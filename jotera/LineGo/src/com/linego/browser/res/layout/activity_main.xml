@@ -13,6 +13,14 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
+<include
+    android:id="@+id/linego_bar"
+    layout="@layout/search_bar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true" />
+    
+    
     <View
         android:id="@+id/sovereignty_shield"
         android:layout_width="10dp"
