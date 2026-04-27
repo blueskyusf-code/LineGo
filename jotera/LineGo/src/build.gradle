@@ -1,0 +1,63 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.linego.browser'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.linego.browser"
+        minSdk 24 // Garante suporte a 90% dos Androids ativos
+        targetSdk 34
+        versionCode 1
+        versionName "1.0-TERA_ENGINE"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        
+        // Se você for compilar o yusr.h e o motor Tera em C++:
+        /*
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++17"
+            }
+        }
+        */
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true // Remove código não utilizado
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            
+            // Otimização para o motor Tera
+            ndk {
+                abiFilters 'armeabi-v7a', 'arm64-v8a'
+            }
+        }
+    }
+
+    // Configuração para enxergar as pastas de recursos do Jotera
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+            // Se quiser que o Gradle saiba onde estão seus headers
+            assets.srcDirs = ['src/main/assets', 'jotera/extensions']
+        }
+    }
+    
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    
+    // Engine base para renderização
+    implementation 'androidx.webkit:webkit:1.8.0'
+}
